@@ -1,11 +1,14 @@
 
 import 'package:apps/screens/Portfolio.dart';
 import 'package:apps/widgets/CustomButton.dart';
+import 'package:apps/widgets/CustomTextFormField.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget{
   LoginScreen({super.key});
   final TextEditingController controllerName = TextEditingController() ;
+  final TextEditingController controllerSpecialist = TextEditingController() ;
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,38 +23,34 @@ class LoginScreen extends StatelessWidget{
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(12.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextFormField(
-                  controller: controllerName,
-                  decoration: InputDecoration(
-                    labelText: 'User Name',
-                    hintText: 'Enter your name',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomTextFormField(label: 'User Name', hintText: 'Enter Your Name', controller: controllerName),
+                  SizedBox(height: 15,),
+                  CustomTextFormField(label: 'Specialist', hintText: 'Enter your specialist', controller: controllerSpecialist),
+                  SizedBox(height: 15,),
+                  CustomButton(color: Color(0xffFF6464), text: 'Show Portfolio',onPressed: (){
+                    final name = controllerName.text.trim();
+                    final specialist = controllerSpecialist.text.trim();
+                    if (formKey.currentState!.validate()) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PortfolioScreen(name: name,specialist: specialist),
+                        ),
+                      );
+                  }
+                  }
                   ),
-                ),
-                SizedBox(height: 15,),
-                CustomButton(color: Color(0xffFF6464), text: 'Show Portfolio',onPressed: (){
-                  final name = controllerName.text.trim();
-                  if (name.isNotEmpty) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PortfolioScreen(name: name),
-                      ),
-                    );
-                }
-                }
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
-
 }

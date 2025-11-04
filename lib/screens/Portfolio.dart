@@ -1,14 +1,15 @@
 import 'package:apps/widgets/customText.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/CustomButton.dart';
 
 class PortfolioScreen extends StatelessWidget{
-  const PortfolioScreen({super.key,required this.name});
+  const PortfolioScreen({super.key,required this.name, required this.specialist});
   final String name;
+  final String specialist;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -25,7 +26,7 @@ class PortfolioScreen extends StatelessWidget{
               SizedBox(
                 width: 312,
                 height: 140,
-                child: CustomText(text: 'Hi, I am $name Creative Technologist',
+                child: CustomText(text: 'Hi, I am $name $specialist',
                     size: 32,
                     fontWeight: FontWeight.w700
                 ),
